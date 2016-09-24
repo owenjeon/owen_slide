@@ -1,0 +1,3 @@
+*.ftpconfig
+node_modules/
+index.js

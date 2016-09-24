@@ -1,0 +1,22 @@
+@mixin clearfix {
+    content: '';
+    display: table;
+    clear: both;
+}
+
+.owen-slide-area{
+    position: relative;
+    overflow: hidden;
+    .owen-slide-wrap{
+        position: relative;
+        &:after{
+            @include clearfix;
+        }
+        > .owen-slide{
+            float: left;
+            > .in{
+                height:500px;
+            }
+        }
+    }
+}

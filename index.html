@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script src="public/js/dev/jquery-1.11.2.min.js" charset="utf-8"></script>
+    <script src="public/js/dist/owen_slide.min.js" charset="utf-8"></script>
+    <link rel="stylesheet" href="public/style/css/common.css" media="screen" title="no title">
+    <link rel="stylesheet" href="public/style/css/slide.css" media="screen" title="no title">
+</head>
+<body>
+    <div class="owen-slide-area">
+        <div class="owen-slide-wrap">
+            <div class="owen-slide" style="background-color:red"><div class="in">1</div></div>
+            <div class="owen-slide" style="background-color:green"><div class="in">2</div></div>
+            <div class="owen-slide" style="background-color:blue"><div class="in">3</div></div>
+        </div>
+        <div class="paging">
+            <button class="btn_prev">이전</button>
+            <button class="btn_next">다음</button>
+        </div>
+    </div>
+</body>
+<script>
+    var sp = new Owen_slide('.owen-slide-area', {
+        onLoad : function(sp){
+            $('.paging .btn_prev').on('click',sp.slidePrev);
+            $('.paging .btn_next').on('click',sp.slideNext);
+        }
+    });
+</script>
+</html>
