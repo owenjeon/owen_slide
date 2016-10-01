@@ -7,6 +7,12 @@
 .owen-slide-area{
     position: relative;
     overflow: hidden;
+    &.vertical{
+        height:500px;
+        .owen-slide-wrap > .owen-slide{
+            float: none;
+        }
+    }
     .owen-slide-wrap{
         position: relative;
         &:after{

@@ -1,5 +1,9 @@
 .owen-slide-area { position: relative; overflow: hidden; }
 
+.owen-slide-area.vertical { height: 500px; }
+
+.owen-slide-area.vertical .owen-slide-wrap > .owen-slide { float: none; }
+
 .owen-slide-area .owen-slide-wrap { position: relative; }
 
 .owen-slide-area .owen-slide-wrap:after { content: ''; display: table; clear: both; }
