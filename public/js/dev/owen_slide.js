@@ -163,7 +163,7 @@ var Owen_slide = function(el, params){
 		_this.slideTo(_this.activeIdx,0, false);
 
 	};
-	var x1, y1, x2, y2, mStart, mCheck, posi, moveDist, rectPoints = [];
+	var x1, y1, x2, y2, mStart, mCheck, posi, moveDist, rectPoints = [], downEvent;
 	this.swipeFn = {
 		down : function(e){
 			if(e.type == 'mousedown'){
@@ -173,20 +173,27 @@ var Owen_slide = function(el, params){
 				x1 = e.originalEvent.touches[0].pageX;
 				y1 = e.originalEvent.touches[0].pageY;
 			}
+            // Blur active elements
+            var eventTarget = e.target || e.srcElement;
+            if (document.activeElement && document.activeElement !== document.body) {
+                if (document.activeElement !== eventTarget) document.activeElement.blur();
+            }
 			posi = _this.getWrapperTranslate();
 			rectPoints = [bx.offset().top, bx.offset().left + bx.width(), bx.offset().top + bx.height(), bx.offset().left];
 			mStart = mCheck = true;
 			moveDist = 0;
+            e.preventDefault();
 		},
 		move : function(e){
 			if(mStart){
+                var page;
 				if(e.type == 'mousemove'){
-					x2 = e.pageX - x1;
-					y2 = e.pageY - y1;
+                    page = {x:e.pageX, y:e.pageY};
 				}else{
-					x2 = e.originalEvent.touches[0].pageX - x1;
-					y2 = e.originalEvent.touches[0].pageY - y1;
+                    page = {x:e.originalEvent.touches[0].pageX, y:e.originalEvent.touches[0].pageY};
 				}
+                x2 = page.x - x1;
+                y2 = page.y - y1;
 				if(mCheck){
 					if((params.mode === 'horizontal' && (Math.abs(x2/y2) < 1 || Math.abs(x2/y2) == -Infinity)) || (params.mode !== 'horizontal' && (Math.abs(y2/x2) < 1 || Math.abs(y2/x2) == -Infinity))){
 						win.off(touchEv.move, _this.swipeFn.move);
@@ -205,11 +212,11 @@ var Owen_slide = function(el, params){
 				else {
 					ul.css(dirc, moveDist + posi);
 				}
-				if(e.pageY < rectPoints[0] || e.pageX > rectPoints[1] || e.pageY > rectPoints[2] || e.pageX < rectPoints[3]){
+				if(page.y < rectPoints[0] || page.x > rectPoints[1] || page.y > rectPoints[2] || page.x < rectPoints[3]){
 					_this.swipeFn.up(e);
 				}
 			}
-			e.preventDefault();
+
 		},
 		up : function(e){
 			e.preventDefault();
@@ -264,6 +271,7 @@ var Owen_slide = function(el, params){
 			bx.on(touchEv.down,function(e){
 				if(!flag) return;
 				_this.swipeFn.down(e);
+                downEvent = e;
 				win.on(touchEv.move, _this.swipeFn.move);
 				win.on(touchEv.up, _this.swipeFn.up);
 			})
