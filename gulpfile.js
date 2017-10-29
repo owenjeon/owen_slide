@@ -25,7 +25,7 @@ gulp.task('convert-sass',function(){
 });
 
 
-gulp.task('watch',function(){
+gulp.task('watch',['minify-js', 'convert-sass'], function(){
     gulp.watch(path.js+'*.js', ['minify-js']);
     gulp.watch(path.style+'*.scss', ['convert-sass']);
 });
